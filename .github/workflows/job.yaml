@@ -55,8 +55,8 @@ jobs:
   # Matrix Job: Deployment to Staging and Production (Self-Hosted EC2 with Tomcat installed)
   deploy:
    
-    runs-on: [self-hosted, ${{ matrix.environment }}]  # Use dynamic environment (staging or production)
-    needs: [sonar_analysis, upload_artifact]  # Waits for SonarQube and Artifactory jobs to complete
+    runs-on: ${{ matrix.environment }}  # Use dynamic environment (staging or production)
+    needs: [upload_artifact]  # Waits for SonarQube and Artifactory jobs to complete
     strategy:
       matrix:
         environment: [staging, production]  # Deploy to both staging and production environments
