@@ -17,11 +17,10 @@ on:
         default: 'false'
 
 jobs:
-  # Parallel Job: Build and Test on Self-Hosted EC2 (with Tomcat installed)
+
   build_and_test:
-    # This job will run on a self-hosted runner with the "staging" label.
-    # Ensure your self-hosted runner for staging has the label `staging` assigned to it.
-    runs-on: ubuntu-latest  # Self-hosted EC2 with Tomcat installed (Staging)
+    
+    runs-on: ubuntu-latest  
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -39,27 +38,9 @@ jobs:
         run: mvn test
         if: ${{ success() }}  # Run this step only if the previous build step succeeded
 
-  # Sequential Jobs: SonarQube Analysis and Artifact Upload
-  sonar_analysis:
-    # This job will also run on the self-hosted runner with the "staging" label.
-    # Ensure the staging runner has the "staging" label.
-    runs-on: [self-hosted, staging]  # Self-hosted EC2 with Tomcat installed (Staging)
-    needs: build_and_test
-    if: ${{ needs.build_and_test.result == 'success' }}  # Run only if build and test succeed
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run SonarQube analysis
-        uses: SonarSource/sonarcloud-github-action@v1
-        with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
-          sonar-host-url: 'https://sonarcloud.io'
 
   upload_artifact:
-    # This job will also run on the self-hosted runner with the "staging" label.
-    # Ensure the staging runner has the "staging" label.
-    runs-on: [self-hosted, staging]  # Self-hosted EC2 with Tomcat installed (Staging)
+    runs-on: ubuntu-latest  
     needs: build_and_test
     if: ${{ needs.build_and_test.result == 'success' }}  # Run only if build and test succeed
     steps:
@@ -75,9 +56,7 @@ jobs:
 
   # Matrix Job: Deployment to Staging and Production (Self-Hosted EC2 with Tomcat installed)
   deploy:
-    # This job will deploy to both staging and production environments based on the matrix configuration.
-    # The staging environment will use the self-hosted runner with the "staging" label.
-    # The production environment will use the self-hosted runner with the "production" label.
+   
     runs-on: [self-hosted, ${{ matrix.environment }}]  # Use dynamic environment (staging or production)
     needs: [sonar_analysis, upload_artifact]  # Waits for SonarQube and Artifactory jobs to complete
     strategy:
