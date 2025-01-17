@@ -67,7 +67,7 @@ jobs:
           echo "Uploading artifact to JFrog Artifactory..."
           pwd
           ls
-          curl -u admin:cmVmdGtuOjAxOjE3Njg1ODg1NDk6OWhZNmNZWHNCQkp1dXk5bnBVdUx5Z0pxR0pj -T /home/ubuntu/actions-runner/_work/git_actions/git_actions/target/git_actions-1.0.*.war  "http://65.2.178.251:8082/artifactory/git_actions-libs-release//com/efsavage/hello-world-war/"
+          curl -u admin:cmVmdGtuOjAxOjE3Njg1ODg1NDk6OWhZNmNZWHNCQkp1dXk5bnBVdUx5Z0pxR0pj -T target/git_actions-1.0.*.war  "http://65.2.178.251:8082/artifactory/git_actions-libs-release//com/efsavage/hello-world-war/"
 
   # Matrix Job: Deployment to Staging and Production (Self-Hosted EC2 with Tomcat installed)
   deploy:
