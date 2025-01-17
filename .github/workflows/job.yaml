@@ -49,7 +49,7 @@ jobs:
       - name: Run SonarQube analysis
         run: |
           mvn clean verify sonar:sonar \
-            -Dsonar.organization=testing_gitactions \
+            -Dsonar.organization=testing-gitactions \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.projectKey=testing-gitactions_git-actions \
             -Dsonar.login=16c7034892e950d00f5607dce7ed406e15437d50
