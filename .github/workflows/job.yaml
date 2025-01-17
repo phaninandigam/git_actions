@@ -43,8 +43,8 @@ jobs:
     needs: build_and_test
     if: ${{ needs.build_and_test.result == 'success' }}  # Run only if build and test succeed
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
 
       - name: Run SonarQube analysis
         run: |
@@ -59,8 +59,8 @@ jobs:
     needs: build_and_test
     if: ${{ needs.build_and_test.result == 'success' }}  # Run only if build and test succeed
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
 
       - name: Upload Artifact to JFrog Artifactory
         run: |
@@ -76,8 +76,8 @@ jobs:
       matrix:
         environment: [staging, production]  # Deploy to both staging and production environments
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
 
       - name: Deploy to Tomcat (Staging/Production)
         run: |
