@@ -71,7 +71,7 @@ jobs:
   deploy:
    
     runs-on: ${{ matrix.environment }}  # Use dynamic environment (staging or production)
-    needs: [upload_artifact]  # Waits for SonarQube and Artifactory jobs to complete
+    needs: [sonar_analysis, upload_artifact]  # Waits for SonarQube and Artifactory jobs to complete
     strategy:
       matrix:
         environment: [staging, production]  # Deploy to both staging and production environments
